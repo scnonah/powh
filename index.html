@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>POWH.XYZ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="icon" href="/assets/images/emptypowh.png?t=796876" type="image/png">
+
+  <!-- STYLES -->
+  <link id="link-bootstrap" rel="stylesheet" href="" media="screen">
+  <script>
+    var theme = 'default';
+    if (localStorage.getItem("theme") !== null) {
+      theme = localStorage.getItem('theme')
+    }
+    document.getElementById('link-bootstrap').href = '/assets/css/themes/' + theme + '/bootstrap.min.css';</script>
+  <link rel="stylesheet" href="/assets/css/styles.css" media="screen">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+
+  <!-- SCRIPTS -->
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="/assets/js/plugins/toaster.min.js"></script>
+  <script src="/assets/js/ls.js"></script>
+  <script src="/assets/js/plugins/bignumber.min.js"></script>
+  <script src="/assets/js/main.js?t=635635636"></script>
+
+  <!--ANALYTICS -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116482311-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-116482311-1');
+  </script>
+  <style>
+    #overlay {
+      background: #fff;
+      color: #666;
+      position: fixed;
+      height: 100%;
+      width: 100%;
+      z-index: 999999;
+      top: 0;
+      left: 0;
+      float: left;
+      text-align: center;
+      padding-top: 15%
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="overlay">
+    <img src="/assets/images/spinning.gif" alt="Loading" style="height:120px;" />
+    <br/> Loading...
+  </div>
+
+  <nav class="navbar navbar-expand-lg  fixed-top navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="/">POWH.XYZ</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Buy/Sell</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/transfer/">Transfer</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="window.location.href='https://powh.io/?masternode=0xec230b380d8ba8059be2e77d29f5a12f9a8eb83b';"
+              href="#">powh.io</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://etherscan.io/address/0xb3775fb83f7d12a36e0475abdd1fca35c091efbe" target="_blank">Contract</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              Theme
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <span class="dropdown-item span-theme-change" data-folder="default">Light</span>
+              <span class="dropdown-item span-theme-change" data-folder="darkly">Dark</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+
+    <div id="div-alert" class="alert alert-danger" role="alert">
+      Please login to MetaMask. If you dont have it, please install
+      <a href="https://metamask.io/" class="alert-link" target="_blank">MetaMask</a> to purchase P3D tokens. Find out more
+      <a href="https://metamask.io/" class="alert-link" target="_blank">here.</a>
+    </div>
+    <div class="row" style="margin-bottom:20px;">
+      <div class="col-xl-3 col-lg-6">
+        <div class="card">
+          <div class="card-body dash-card">
+            <span class="card-title" style="display:block;">Total Contract Balance</span>
+            <span id="dash-total-eth" class="dash-box" style="display:block;">0.00</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6">
+        <div class="card">
+          <div class="card-body dash-card">
+            <span class="card-title" style="display:block;">Total Circulating Supply</span>
+            <span id="dash-total-circulating" class="dash-box" style="display:block;">0.00</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6">
+        <div class="card">
+          <div class="card-body dash-card">
+            <span class="card-title" style="display:block;">Wallet Balance</span>
+            <span id="dash-wallet-balance" class="dash-box" style="display:block;">0.000000 P3D</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6">
+        <div class="card">
+          <div class="card-body dash-card">
+            <span class="card-title" style="display:block;">POWH Dividends</span>
+            <span id="dash-wallet-dividends" class="dash-box" style="display:block;">0.000000 ETH </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      .dash-box {
+        font-size: 18px;
+      }
+
+      .dash-card {
+        padding-right: 0px;
+      }
+
+      .exchange-input {
+        padding: 10px 10px;
+      }
+    </style>
+
+    <div class="row">
+      <div class="col-xl-5 col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Buy P3D</h5>
+            <div class="container">
+              <div class="row">
+                <div class="col-xl-12" style="margin-bottom:10px;">&nbsp;
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xl-3" style="padding-top: 10px;">
+                  Price:
+                </div>
+                <div class="col-xl-9">
+                  <div class="input-group mb-3">
+                    <input id="input-buy-price" type="text" class="form-control exchange-input" disabled="disabled">
+                    <div class="input-group-append">
+                      <span class="input-group-text">ETH</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-3" style="padding-top: 10px;">
+                  Amount:
+                </div>
+                <div class="col-xl-9">
+                  <div class="input-group mb-3">
+                    <input id="input-buy-amount" type="text" class="form-control exchange-input" disabled="disabled">
+                    <div class="input-group-append">
+                      <span class="input-group-text">P3D</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr style="margin-top: -4px;margin-bottom: 10px;">
+
+              <div class="row">
+                <div class="col-xl-3" style="padding-top: 10px;padding-right:0px;">
+                  Total (EST):
+                </div>
+                <div class="col-xl-9">
+                  <div class="input-group mb-3">
+                    <input id="input-buy-total" type="text" class="form-control exchange-input">
+                    <div class="input-group-append">
+                      <span class="input-group-text">ETH</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12">
+                  <button id="btn-buy" type="button" class="btn btn-outline-success btn-block">BUY</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-lg-4">
+        <div class="card" style="height:100%;">
+          <div class="card-body" style="text-align:center;">
+            <img src="/assets/images/spinning.gif" style="max-width:100%; max-height:100%;">
+            <span style="font-weight:bold;font-size:30px;">P3D</span>
+            <button id="btn-reinvest" type="button" class="btn btn-outline-primary" style="padding: 0.75rem 1rem;width: 100%;margin-top:20px;"
+              onclick="reinvest();">Reinvest</button>
+            <button id="btn-withdraw" type="button" class="btn btn-outline-primary" style="padding: 0.75rem 1rem;width: 100%;margin-top:10px;"
+              onclick="withdraw();">withdraw</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-5 col-lg-8">
+        <div class="card">
+
+          <div class="card-body">
+            <h5 class="card-title">SELL P3D</h5>
+
+            <div class="container">
+
+              <div class="row">
+                <div class="col-xl-3">
+                  Balance:
+                </div>
+                <div id="div-balance-eth" class="col-sm-9" style="text-align:right;margin-bottom:10px;">
+                  <span id="span-balance-p3d" class="text-info" style="cursor:pointer;">Not Signed In</span>
+                </div>
+              </div>
+
+
+
+              <div class="row">
+                <div class="col-xl-3" style="padding-top: 10px;">
+                  Price:
+                </div>
+                <div class="col-xl-9">
+                  <div class="input-group mb-3">
+                    <input id="input-sell-price" type="text" class="form-control exchange-input" disabled="disabled">
+                    <div class="input-group-append">
+                      <span class="input-group-text">ETH</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-3" style="padding-top: 10px;">
+                  Amount:
+                </div>
+                <div class="col-xl-9">
+                  <div class="input-group mb-3">
+                    <input id="input-sell-amount" type="text" class="form-control exchange-input">
+                    <div class="input-group-append">
+                      <span class="input-group-text">P3D</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr style="margin-top: -4px;margin-bottom: 10px;">
+
+              <div class="row">
+                <div class="col-xl-3" style="padding-top: 10px;padding-right:0px;">
+                  Total (EST):
+                </div>
+                <div class="col-xl-9">
+                  <div class="input-group mb-3">
+                    <input id="input-sell-total" type="text" class="form-control exchange-input" disabled="disabled">
+                    <div class="input-group-append">
+                      <span class="input-group-text">ETH</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xl-12">
+                  <button id="btn-sell" type="button" class="btn btn-outline-danger btn-block">SELL</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- masternode -->
+      <div class="col-xl-12" style="margin-top:30px;">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Masternode
+              <button type="button" class="btn btn-secondary float-right" data-trigger="focus" data-container="body" data-toggle="popover"
+                data-placement="bottom" data-content="If you do not have a master nose selected, our powh.xyz master node will be used by default.">
+                ?
+              </button>
+            </h5>
+            <a id="link-masternode" href="" style="font-size:18px;" class="text-info">Not Signed In</a>
+            <br/>
+            <span style="font-size:11px;">When people buy from our store using your link, your masternode will receive a portion of the fees they pay.</span>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="col-xl-12" style="margin-top:30px;">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Pervious Transactions
+              <span style="font-size:10px;">(We're currently working on upgrading this feature)</span>
+            </h5>
+            <div style="max-height: 400px; overflow-x: scroll;overflow-y: scroll;">
+              <table id="tbl-transactions" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Tx.</th>
+                    <!-- <th scope="col">Action</th> -->
+                    <th scope="col">ETH</th>
+                    <!-- <th scope="col">P3D</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="9">Not Signed In</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script src="/assets/js/store.js?t=1234"></script>
+
+
+
+        <footer id="footer" style="margin-top:90px;margin-bottom:90px;">
+          <hr>
+          <div class="row">
+            <div class="col-xl-12">
+              <h5>LINKS</h5>
+              <ul class="list-unstyled">
+                <li class="float-lg-right">
+                  <a href="#top" class="text-info">Back to top</a>
+                </li>
+                <li>
+                  <a onclick="window.location.href='https://powh.io/?masternode=0xec230b380d8ba8059be2e77d29f5a12f9a8eb83b';" href="#" class="text-info">powh.io</a>
+                </li>
+                <li>
+                  <a href="https://powh.trade/" class="text-info">powh.trade</a>
+                </li>
+              </ul>
+              <h5 style="display:inline-block;">Donations</h5>
+              <span style="font-size:13px;">- Help us pay for servers, maintenence and domain fees.</span>
+              <ul class="list-unstyled">
+                <li onclick="window.location.href='https://powh.io/?masternode=0xec230b380d8ba8059be2e77d29f5a12f9a8eb83b';" style="cursor:pointer;">P3D - Click to use our masternode on powh.io.</li>
+                <li onclick="window.location.href='http://powh.xyz/?masternode=0xEc230b380D8Ba8059be2e77d29f5a12F9a8EB83b';" style="cursor:pointer;">P3D - Click to use our masternode on powh.xyz.</li>
+                <li>BTC - 163ydpHjPkpWb9Yg3mWGHA6v3EtNrikLdT</li>
+                <li>ETH - 0x04c457a6e5FDFcAd9aC9120eeE4BD13259956837</li>
+                <li>LTC - LLtH8xvpCJBFwDTDb48JoLcSXXjUAyDteS</li>
+              </ul>
+
+              <p>Transaction data provided by
+                <a href="https://etherscan.io/apis" class="text-info">etherscan.io</a> api.</p>
+            </div>
+          </div>
+        </footer>
+
+
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+      <script>
+        $(function () {
+          $('[data-toggle="popover"]').popover()
+        })
+      </script>
+</body>
+
+</html>
